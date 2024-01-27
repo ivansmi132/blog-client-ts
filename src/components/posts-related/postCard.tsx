@@ -1,20 +1,35 @@
 import {Button, Card, Flex, Typography} from "antd";
 import React from "react";
+import './posts.css';
+import { Post } from "../../models/Post";
 
-export function PostCard() {
+interface PostCardProps {
+    post: Partial<Post>,
+    loading: boolean;
+    setLoading: CallableFunction
+}
+
+export function PostCard({post, loading, setLoading}: PostCardProps) {
+    const {title, image_url} = post;
+
     return (
-        <Card style={{ maxWidth: 900, maxHeight:250, border: "1px solid #9E2B25", margin:"auto"}}>
-            <Flex justify="space between">
-                <img src="https://images.pexels.com/photos/38136/pexels-photo-38136.jpeg" alt="example" style={{display: "block", width: 273, maxHeight: 200}}/>
-                <Flex gap="large" vertical align="flex-end" justify="space-between" style={{padding: 20}}>
-                    <Typography.Title style={{height: "100%"} } level={3}>
-                        “antd is an enterprise-class UI design language and React UI library.”
+        <Card loading={loading} className={"post-container"}>
+            <Flex justify="space-between">
+                <img
+                    className="post-image"
+                    alt="image"
+                    src={image_url}
+                />
+                <Flex vertical align="flex-end" justify="space-between" style={{ padding: 32 }}>
+                    <div className="date">25 Jan 2023</div>
+                    <Typography.Title level={3}>
+                        {title}
                     </Typography.Title>
-                    <Button type="primary" href="https://ant.design" target="_blank">
+                    <Button className="btn" type="primary" href={`/posts/${post.id}`} style={{position: "relative"}}>
                         Read More
                     </Button>
                 </Flex>
             </Flex>
         </Card>
-    )
+    );
 }

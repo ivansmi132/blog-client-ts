@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Layout, App, Breadcrumb} from 'antd';
+import { Navbar } from './components/navbar';
+import "./components/styles.css"
+import { Footer } from 'antd/es/layout/layout';
+import { Outlet } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+
+const {
+    Content,
+} = Layout;
+
+
+export function MyApp() {
+
+    return (
+            <App>
+                <Layout style={{ minHeight: "100vh" }}>
+                    <Navbar />
+                    <Content style={{ padding: '0 48px' }}>
+                        <Breadcrumb style={{ margin: '16px 0' }}>
+                            <Breadcrumb.Item>Home</Breadcrumb.Item>
+                            <Breadcrumb.Item>List</Breadcrumb.Item>
+                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <div
+                            style={{
+                                background: '#a3d9ff',
+                                minHeight: 280,
+                                padding: 24,
+                                borderRadius: 10,
+                            }}
+                        >
+                            <Outlet />
+                        </div>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>
+                        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                    </Footer>
+                </Layout>
+
+            </App>
   );
 }
 
-export default App;
