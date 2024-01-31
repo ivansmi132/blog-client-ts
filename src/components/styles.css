@@ -25,12 +25,9 @@
     gap: 20px;
 }
 
-.ppost-container {
-    height: 260px;
-    border-radius: 20px;
-    align-items: center;
-    gap:40px;
-    padding: 2%;
+.post-container {
+    height: 248px;
+
 }
 
 /*.main-section {*/

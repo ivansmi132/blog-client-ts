@@ -1,6 +1,5 @@
 import {Button, Card, Flex, Typography} from "antd";
 import React from "react";
-import './posts.css';
 import { Post } from "../../models/Post";
 
 interface PostCardProps {

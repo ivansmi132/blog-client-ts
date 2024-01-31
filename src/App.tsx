@@ -36,7 +36,7 @@ export function MyApp() {
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                        Ivan's Blog ©{new Date().getFullYear()}
                     </Footer>
                 </Layout>
 
