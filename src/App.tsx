@@ -1,6 +1,6 @@
 import React from 'react';
 import {Layout, App, Breadcrumb} from 'antd';
-import { Navbar } from './components/navbar';
+import { Navbar } from './components/Navbar/Navbar';
 import "./components/styles.css"
 import { Footer } from 'antd/es/layout/layout';
 import { Outlet } from 'react-router-dom';

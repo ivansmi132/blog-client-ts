@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import {Pagination} from "antd";
 import {PostCard} from "./postCard";
-import {useBlogPostsContext} from "../../hooks/useBlogPostsContext";
+import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {Post} from "../../models/Post";
-
+import {usePostsAPI} from "../../models/usePostsAPI";
 
 
 interface PostsState {
@@ -12,29 +12,34 @@ interface PostsState {
 }
 
 export function PostsList() {
-    const {postsPagination, setPostsPagination} = useBlogPostsContext();
+
+    const {postsPagination, setPostsPagination} = usePaginationContext();
+
+    const {fetchAllPosts} = usePostsAPI();
+
     const [posts, setPostsData]
         = useState<PostsState>({list: [], totalPostsNumber: 0});
-    const postsSection = useRef<HTMLDivElement>(null);
-    const [loading, setLoading] = useState(true);
 
-    const fetchPosts = async() => {
-        return await fetch(
-            `${process.env.REACT_APP_API_URL}/posts?page=${postsPagination.currentPage}&search=${postsPagination.query}&pageSize=${postsPagination.pageSize}`,
-            {credentials: "include"})
-            .then(res => res.json()).then(json => {
-                setPostsData(() => {
-                    return {
-                        list: json[1],
-                        totalPostsNumber: json[0].posts_number
-                    }
-                })
-            })
-    }
+    const postsSection = useRef<HTMLDivElement>(null);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchPosts().then(() => setLoading(false))
     }, [postsPagination]);
+
+    const fetchPosts = async() => {
+        return await fetchAllPosts()
+            .then(fetchedPosts => {
+                console.log(fetchedPosts);
+                setPostsData(() => {
+                    return {
+                        list: fetchedPosts.posts,
+                        totalPostsNumber: fetchedPosts.posts_number
+                    }
+                })
+            })
+    }
 
     return (
         <>

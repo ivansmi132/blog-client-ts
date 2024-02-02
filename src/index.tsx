@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import {router} from "./routes";
 import {AuthContextProvider} from "./providers/auth-provider";
-import {BlogPostsProvider} from "./providers/blogposts-provider";
 import {myTheme} from "./providers/config-provider";
 import {ConfigProvider} from "antd";
+import {PaginationContextProvider} from "./providers/pagination-provider";
 
 
 const root = ReactDOM.createRoot(
@@ -14,11 +14,11 @@ const root = ReactDOM.createRoot(
 root.render(
 
     <AuthContextProvider>
-        <BlogPostsProvider>
+        <PaginationContextProvider>
             <ConfigProvider theme={myTheme}>
             <RouterProvider router={router} />
             </ConfigProvider>
-        </BlogPostsProvider>
+        </PaginationContextProvider>
     </AuthContextProvider>
 );
 

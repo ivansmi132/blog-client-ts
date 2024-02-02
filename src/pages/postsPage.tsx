@@ -1,13 +1,13 @@
 import Search from "antd/es/input/Search";
 import {useRef} from "react";
-import { PostsList } from "../components/posts-related/postsList";
-import {useBlogPostsContext} from "../hooks/useBlogPostsContext";
+import { PostsList } from "../components/posts-components/postsList";
+import {usePaginationContext} from "../hooks/usePaginationContext";
 
 export const PostsPage = (function PostsPage() {
     const {
         postsPagination,
         setPostsPagination,
-    } = useBlogPostsContext();
+    } = usePaginationContext();
     const postsSection = useRef<HTMLDivElement>(null);
 
     const handleUserInput = (value: string) => {

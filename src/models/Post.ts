@@ -3,5 +3,6 @@ export interface Post {
     content: string,
     image_url: string,
     id: number,
-    posted_by: number
+    posted_by: string,
+    creation_date: string
 }

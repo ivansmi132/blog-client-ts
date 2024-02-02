@@ -4,7 +4,8 @@ import {Homepage} from "./pages/homepage";
 import {PostsPage} from "./pages/postsPage";
 import {SinglePostPage} from "./pages/singlePostPage";
 import {AdminPage} from "./pages/adminPage";
-import {CreatePostForm} from "./components/forms/createPostForm";
+import {CreatePostForm} from "./components/forms/CreatePostForm";
+import {EditPostForm} from "./components/forms/EditPostForm";
 
 export const router = createBrowserRouter([
     {
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "posts",
-                element: <PostsPage/>
+                element: <PostsPage/>,
             },
             {
                 path: "posts/:id",
@@ -28,8 +29,12 @@ export const router = createBrowserRouter([
                 element: <AdminPage />,
                 children: [
                     {
-                        path: "newpost",
+                        path: "create_post",
                         element: <CreatePostForm />
+                    },
+                    {
+                        path:"edit_post",
+                        element: <EditPostForm />
                     }
                 ]
             }

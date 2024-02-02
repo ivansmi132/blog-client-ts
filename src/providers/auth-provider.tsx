@@ -1,48 +1,53 @@
 import {createContext, useEffect, useState} from "react";
-import {ContextProviderProps} from "../models/contextProviderProps";
+import {ContextProviderProps} from "../models/ContextProviderProps";
 import {User} from "../models/User";
 
 
-interface UserContextValue {
+interface AuthContextValue {
     user: User | null;
-    signOut: () => void,
-    loading: boolean,
-    setLoading: CallableFunction
+    logOut: () => void,
+    checkingAuthStatus: boolean,
+    setCheckingAuthStatus: CallableFunction
 }
 
-export const AuthContext = createContext<UserContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 
 export function AuthContextProvider({children}: ContextProviderProps) {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
 
+    const [checkingAuthStatus, setCheckingAuthStatus] = useState(true);
 
+    // when the app mounts, we check whether the user is authenticated or not
     useEffect(() => {
         logIn();
     }, [])
 
     function logIn() {
-        fetch(`${process.env.REACT_APP_API_URL}/login`, {credentials: "include"})
+        fetch(`${process.env.REACT_APP_API_URL}/auth/login`,
+            {credentials: "include"})
             .then(data => data.json())
             .then(json => {
                 if (!json) {return}
                 console.log("user info", json);
-                setUser({name: json.name, id: 1, picture_url: json.picture_url});
-                setLoading(false);
-            }).catch(() => setLoading(false));
+                setUser(json.user);
+            })
+            .catch((err) =>
+            console.log("Error checking authentication status:", (err as Error).message))
+            .finally(() => setCheckingAuthStatus(false));
     }
 
-    function signOut() {
-        fetch(`${process.env.REACT_APP_API_URL}/logout`, {credentials: "include"})
+    function logOut() {
+        fetch(`${process.env.REACT_APP_API_URL}/auth/logout`,
+            {credentials: "include"})
             .then(() => {
                 setUser(null);
-                setLoading(true);
+                setCheckingAuthStatus(true);
                 logIn();
             })
     }
 
-    const value: UserContextValue = {user, signOut, loading, setLoading};
+    const value: AuthContextValue = {user, logOut, checkingAuthStatus, setCheckingAuthStatus};
 
     return (
         <AuthContext.Provider value={value}>

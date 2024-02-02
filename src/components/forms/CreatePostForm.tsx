@@ -1,27 +1,25 @@
 import {Button, Input} from 'antd';
 import {Controller, useForm} from "react-hook-form";
-import {useBlogPostsContext} from "../../hooks/useBlogPostsContext";
+import {usePostsAPI} from "../../models/usePostsAPI";
+import {Post} from "../../models/Post";
+import {useNavigate} from "react-router-dom";
 
-interface newlyCreatedPost {
-    title: string,
-    content: string,
-}
 export function CreatePostForm() {
     const {TextArea} = Input;
 
-    const blogPostsContext = useBlogPostsContext();
+    const {addPost} = usePostsAPI();
 
+    const {handleSubmit, control} = useForm<Partial<Post>>();
 
-    const {handleSubmit, control} = useForm<newlyCreatedPost>();
+    const navigate = useNavigate();
 
-    function onPostSubmition(data: newlyCreatedPost) {
+    function onPostSubmition(data: Partial<Post>) {
         console.log(data);
-        // blogPostsContext.addPost(data);
-        alert("Post created!");
-
+        addPost(data);
+        navigate('/posts');
     }
     return (
-        <form onSubmit={handleSubmit(onPostSubmition)}>
+        <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onPostSubmition)}>
             <Controller
                 control={control}
                 name="title"
@@ -42,7 +40,7 @@ export function CreatePostForm() {
                     </>
                 )}
             />
-            <Button htmlType="submit">Create Post</Button>
+            <Button style={{margin: "30px"}} htmlType="submit">Create Post</Button>
 
         </form>
     )
