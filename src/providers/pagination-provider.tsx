@@ -18,7 +18,7 @@ export const PaginationContext =
 export function PaginationContextProvider({children}: ContextProviderProps) {
     const [postsPagination, setPostsPagination] = useState<Pagination>({
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 5,
         query: ""
     })
 

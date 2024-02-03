@@ -49,7 +49,12 @@ export function PostsList() {
                 )}
             </div>
             <div style={{display: "flex", justifyContent: "center", marginTop: "2%"}}>
-                <Pagination current={postsPagination.currentPage} total={posts.totalPostsNumber} pageSize={postsPagination.pageSize} onChange={(page, pageSize) => {
+                <Pagination current={postsPagination.currentPage}
+                            total={posts.totalPostsNumber}
+                            pageSize={postsPagination.pageSize}
+                            hideOnSinglePage
+                            showSizeChanger={false}
+                            onChange={(page, pageSize) => {
                     setPostsPagination((prev) => {
                         return {
                             ...prev,

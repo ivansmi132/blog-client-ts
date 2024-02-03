@@ -43,17 +43,18 @@
 }
 .date {
     position: absolute;
-    top: -280px;
-    z-index: 1;
-    width: 65px;
-    right: -30px;
-    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -15px;
+    width: 50px;
+    right: -15px;
+    height: 50px;
     padding: 10px;
-    color: #ffffff;
-    font-weight:bold;
-    background: #A3D9FF;
+    background: #FFFFFF;
     border-radius: 999px;
     text-align: center;
+    font-size: 9px;
 }
 
 .btn {

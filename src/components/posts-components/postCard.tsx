@@ -2,6 +2,7 @@ import {Card, Flex, Typography} from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Post } from "../../models/Post";
+import {PostCreatorInfo} from "./postCreatorInfo";
 
 interface PostCardProps {
     post: Partial<Post>,
@@ -10,7 +11,15 @@ interface PostCardProps {
 }
 
 export function PostCard({post, loading, setLoading}: PostCardProps) {
-    const { title, image_url, creation_date} = post;
+    const { title, image_url, creation_date, user} = post;
+
+    const parseDate = (date: string) => {
+        return new Date(creation_date!).toLocaleDateString('en-GB',{
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+    }
 
     return (
         <Card loading={loading} className={"post-container"}>
@@ -21,7 +30,11 @@ export function PostCard({post, loading, setLoading}: PostCardProps) {
                     src={image_url}
                 />
                 <Flex vertical align="flex-end" justify="space-between" style={{ padding: 32 }}>
-                    <div className="date">{new Date(creation_date!).toLocaleDateString().replaceAll("/", " ")}</div>
+                    <div className="date">{parseDate(creation_date!)}</div>
+                    <div style={{position: "absolute", top: "-15px", left: "0", background: "white", padding: "3px", borderRadius: "12px"}}>
+                        <PostCreatorInfo user={user!} />
+                    </div>
+
                     <Typography.Title level={3}>
                         {title}
                     </Typography.Title>
@@ -33,3 +46,4 @@ export function PostCard({post, loading, setLoading}: PostCardProps) {
         </Card>
     );
 }
+
