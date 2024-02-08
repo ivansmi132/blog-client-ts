@@ -30,7 +30,7 @@ export function AuthContextProvider({children}: ContextProviderProps) {
             .then(json => {
                 if (!json) {return}
                 console.log("user info", json);
-                setUser(json.user);
+                setUser(json);
             })
             .catch((err) =>
             console.log("Error checking authentication status:", (err as Error).message))

@@ -22,7 +22,7 @@ export function Navbar() {
     const items: MenuProps['items'] = [
         {key: "/", icon: React.createElement(TeamOutlined), label: "Home"},
         {key: "/posts", icon: React.createElement(UserOutlined), label: "Posts"},
-        authContext.user && {key: "/admin", icon: React.createElement(TeamOutlined), label: "Admin"}
+        authContext.user?.is_admin ? {key: "/admin", icon: React.createElement(TeamOutlined), label: "Admin"} : null,
     ]
 
     return (

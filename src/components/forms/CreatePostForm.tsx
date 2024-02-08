@@ -1,6 +1,6 @@
 import {Button, Input} from 'antd';
 import {Controller, useForm} from "react-hook-form";
-import {usePostsAPI} from "../../models/usePostsAPI";
+import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {Post} from "../../models/Post";
 import {useNavigate} from "react-router-dom";
 

@@ -3,20 +3,30 @@ import {Avatar, Dropdown, MenuProps} from "antd";
 import {authGoogle} from "../../models/authGoogle";
 import googleButton from "../../assets/google-buttons/png@2x/neutral/web_neutral_rd_ctn@2x.png";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 export function UserMenu() {
     const authContext = useAuthContext();
+    const navigate = useNavigate();
 
     const items: MenuProps['items'] = [
         {
             label: 'Logout',
             key: '1',
+        },
+        {
+            label: 'Create Post',
+            key: '2'
         }
     ];
 
     const onClick: MenuProps['onClick'] = ({ key }) => {
-        if (key === "1") {
-            authContext.logOut();
+        switch (key) {
+            case "1":
+                authContext.logOut();
+                break;
+            case '2':
+                navigate('/create_post');
         }
     };
 

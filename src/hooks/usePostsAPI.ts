@@ -1,6 +1,6 @@
-import {Post} from "./Post";
-import {useAuthContext} from "../hooks/useAuthContext";
-import {usePaginationContext} from "../hooks/usePaginationContext";
+import {Post} from "../models/Post";
+import {useAuthContext} from "./useAuthContext";
+import {usePaginationContext} from "./usePaginationContext";
 
 export function usePostsAPI() {
 
@@ -14,7 +14,7 @@ export function usePostsAPI() {
     }
 
     async function addPost(data: Partial<Post>) {
-        const postToSend = {...data}
+        const postToSend = data;
         postToSend.posted_by = authContext.user!.sub;
         await fetch(`${process.env.REACT_APP_API_URL}/posts`,
             {method: "POST",
@@ -26,7 +26,7 @@ export function usePostsAPI() {
             })
     }
 
-    async function deletePost(id: number) {
+    async function deletePostById(id: number) {
         await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`,
             {method: "DELETE"})
             .then(() => alert(`success! post ${id} deleted!`));
@@ -45,5 +45,13 @@ export function usePostsAPI() {
             .then(data => data.json());
     }
 
-    return ({getPostById, addPost, deletePost, fetchAllPosts});
+    async function editPost(post : Partial<Post>) {
+        await fetch(
+            `${process.env.REACT_APP_API_URL}/posts/${post.id}`,
+            {method: "PUT", headers: {"content-type": "application/json"},
+                body: JSON.stringify(post)}
+        );
+    }
+
+    return ({getPostById, addPost, deletePostById, fetchAllPosts, editPost});
 }

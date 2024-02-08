@@ -3,7 +3,7 @@ import {Pagination} from "antd";
 import {PostCard} from "./postCard";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {Post} from "../../models/Post";
-import {usePostsAPI} from "../../models/usePostsAPI";
+import {usePostsAPI} from "../../hooks/usePostsAPI";
 
 
 interface PostsState {

@@ -3,7 +3,7 @@ import {Controller, useForm} from "react-hook-form";
 import {Post} from "../../models/Post";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {usePostsAPI} from "../../models/usePostsAPI";
+import {usePostsAPI} from "../../hooks/usePostsAPI";
 
 export function EditPostForm() {
 
@@ -15,7 +15,7 @@ export function EditPostForm() {
 
     const [selectedPost, setSelectedPost] = useState<Post>();
 
-    const {getPostById} = usePostsAPI();
+    const {getPostById, editPost} = usePostsAPI();
 
     const {handleSubmit, control} = useForm<Post>(
         {values: selectedPost}
@@ -34,7 +34,8 @@ export function EditPostForm() {
 
     function onEditSubmition(data: Partial<Post>) {
         console.log(data);
-        navigate('/posts');
+        editPost(data)
+            .then(() => navigate('/posts'));
     }
 
     return (
