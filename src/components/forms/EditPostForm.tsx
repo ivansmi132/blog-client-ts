@@ -4,6 +4,7 @@ import {Post} from "../../models/Post";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
+import {usePaginationContext} from "../../hooks/usePaginationContext";
 
 export function EditPostForm() {
 
@@ -17,9 +18,12 @@ export function EditPostForm() {
 
     const {getPostById, editPost} = usePostsAPI();
 
+    const {setPostsPagination} = usePaginationContext();
+
     const {handleSubmit, control} = useForm<Post>(
         {values: selectedPost}
     );
+
 
     useEffect(() => {
         // when the EditPostForm component is mounted we check if we were redirected to here with a post
@@ -35,8 +39,18 @@ export function EditPostForm() {
     function onEditSubmition(data: Partial<Post>) {
         console.log(data);
         editPost(data)
-            .then(() => navigate('/posts'));
+            .then(() => {
+                setPostsPagination((prev) => {
+                    return {
+                        ...prev,
+                        currentPage: 1
+                    }
+                });
+                navigate(`/posts/${selectedPost!.id}`);
+            });
     }
+
+
 
     return (
         <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onEditSubmition)}>

@@ -9,26 +9,25 @@ export function usePostsAPI() {
     const {postsPagination} = usePaginationContext();
 
     async function getPostById(id: number): Promise<Post> {
-        return await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`)
+        return await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {credentials: "include"})
             .then(data => data.json());
     }
 
-    async function addPost(data: Partial<Post>) {
-        const postToSend = data;
-        postToSend.posted_by = authContext.user!.sub;
+    async function addPost(formData: FormData) {
+
         await fetch(`${process.env.REACT_APP_API_URL}/posts`,
             {method: "POST",
-                headers: {"content-type": "application/json"},
-                body: JSON.stringify(postToSend)})
-            .then((res) => {
+                credentials: "include",
+                body: formData})
+            .then(() => {
                 alert("Post created!");
-
             })
     }
 
     async function deletePostById(id: number) {
         await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`,
-            {method: "DELETE"})
+            {method: "DELETE",
+                credentials: "include"})
             .then(() => alert(`success! post ${id} deleted!`));
     }
 
@@ -48,7 +47,9 @@ export function usePostsAPI() {
     async function editPost(post : Partial<Post>) {
         await fetch(
             `${process.env.REACT_APP_API_URL}/posts/${post.id}`,
-            {method: "PUT", headers: {"content-type": "application/json"},
+            {method: "PUT",
+                headers: {"content-type": "application/json"},
+                credentials: "include",
                 body: JSON.stringify(post)}
         );
     }

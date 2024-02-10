@@ -7,5 +7,11 @@ export interface Post {
     id: number,
     posted_by: string,
     creation_date: string,
-    user: User;
+    user: User,
+}
+
+export interface NewPost {
+    title: string,
+    content: string,
+    image?: any;
 }

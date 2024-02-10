@@ -22,11 +22,13 @@ export const PostsPage = (function PostsPage() {
 
     return (
         <>
+            <h1 className="header">Posts</h1>
             <div ref={postsSection}>
                 <div style={{textAlign: "center", marginBottom: "2%"}}>
-                    <Search  placeholder="input search text" defaultValue={postsPagination.query} allowClear onSearch={handleUserInput} style={{ width: 200 }} />
+                    <Search placeholder="search by title ..." defaultValue={postsPagination.query} allowClear
+                            onSearch={handleUserInput} style={{width: 200}}/>
                 </div>
-                <PostsList />
+                <PostsList/>
             </div>
 
         </>

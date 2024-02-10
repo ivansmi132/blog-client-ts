@@ -6,7 +6,7 @@
 
 .header {
     display:block;
-    font-size: 76px;
+    font-size: 60px;
     font-weight: 700;
     line-height: 91px;
     letter-spacing: -0.03em;
@@ -57,6 +57,7 @@
     font-size: 9px;
 }
 
+
 .btn {
     position: relative;
     top: 40px;
@@ -66,13 +67,22 @@
     border-radius: 12px;
 }
 
-.single-post-body > img {
+.single-post-body img {
     max-width: 400px;
-    margin: auto;
+    margin: 2% auto 2%;
+    border-radius: 12px;
 }
 
 .single-post-body {
     display: flex;
     flex-direction: column;
-    text-align: center;
 }
+
+.post-content {
+    background: #FFFFFF;
+    width: 66%;
+    margin: auto;
+    padding: 2%;
+    border-radius: 12px;
+}
+

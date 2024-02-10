@@ -1,10 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Post} from "../models/Post";
 import {usePostsAPI} from "../hooks/usePostsAPI";
-import {FloatButton} from "antd";
+import {Avatar, FloatButton} from "antd";
 import {useAuthContext} from "../hooks/useAuthContext";
 import {usePaginationContext} from "../hooks/usePaginationContext";
+import {PostDate} from "../components/PostDate";
 
 
 export function SinglePostPage() {
@@ -16,8 +17,12 @@ export function SinglePostPage() {
     const {setPostsPagination} = usePaginationContext();
 
 
-    function hasEditPrivilege() {
-        return context.user?.is_admin || (context.user?.sub === currentPost?.posted_by)
+    function isPostCreator() {
+        return context.user?.sub === currentPost?.posted_by
+    }
+
+    function isAdmin() {
+        return context.user?.is_admin
     }
 
 
@@ -26,35 +31,56 @@ export function SinglePostPage() {
     }, [])
 
     return (
-                <div className={"single-post-body"}>
-                    <h1>{currentPost?.title}</h1>
-                    {currentPost?.image_url && <img src={currentPost.image_url} alt={'post'}/>}
-                    <p>{currentPost?.content}</p>
+        <div className={"single-post-body"}>
+            <h1 className="header" style={{width: "66%", margin: "auto"}}>{currentPost?.title}</h1>
+            {currentPost?.image_url && <img src={currentPost.image_url} alt={'post'}/>}
 
-                    {
-                        hasEditPrivilege() && (
-                            <FloatButton.Group shape="circle" style={{ right: 24 }}>
-                                <FloatButton type="primary" shape="square" description="edit"
-                                    onClick={() => navigate('/edit_post', {state: currentPost?.id})}/>
-                                <FloatButton type="primary" shape="square" description="delete"
-                                             onClick={() => {
-                                                 deletePostById(Number(id))
-                                                     .then(() => {
-                                                         setPostsPagination((prev) => {
-                                                             return {
-                                                                 ...prev,
-                                                                 currentPage: 1
-                                                             }
-                                                         })
-                                                         navigate('/posts');
-                                                     });
-                                             }}/>
-                                <FloatButton.BackTop visibilityHeight={0} />
-                            </FloatButton.Group>
-
-                        )
-                    }
-
+            <div className="post-content">
+                <div style={{
+                    justifyContent: "start",
+                    alignItems: "center",
+                    display: "flex",
+                    gap: "10px",
+                    position: "relative",
+                    padding: "3px",
+                    borderRadius: "12px",
+                    color: "gray",
+                    marginBottom: "1%"
+                }}>
+                    <div style={{display: "flex", gap: "7px"}}>
+                        <p>by {currentPost?.user.name}</p>
+                        <Avatar style={{display: "inline-flex"}} size={26} src={currentPost?.user.picture}/>
+                    </div>
+                    <PostDate className={"single-post-date"} date={currentPost?.creation_date!}/>
                 </div>
+                <p style={{whiteSpace: "pre-wrap"}}>{currentPost?.content}</p>
+            </div>
+
+
+            {
+                    <FloatButton.Group shape="circle" style={{right: 24}}>
+                        {(isAdmin() || isPostCreator()) &&
+                            <FloatButton type="primary" shape="square" description="edit"
+                                     onClick={() => navigate('/edit_post', {state: currentPost?.id})}/>
+                        }
+                        {isAdmin() && <FloatButton type="primary" shape="square" description="delete"
+                                     onClick={() => {
+                                         deletePostById(Number(id))
+                                             .then(() => {
+                                                 setPostsPagination((prev) => {
+                                                     return {
+                                                         ...prev,
+                                                         currentPage: 1
+                                                     }
+                                                 })
+                                                 navigate('/posts');
+                                             });
+                                     }}/>
+                        }
+                    </FloatButton.Group>
+
+            }
+
+        </div>
     )
 }

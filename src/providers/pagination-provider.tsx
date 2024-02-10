@@ -9,7 +9,8 @@ interface Pagination {
 
 interface PaginationContextValue {
     postsPagination: Pagination,
-    setPostsPagination: Dispatch<SetStateAction<Pagination>>
+    setPostsPagination: Dispatch<SetStateAction<Pagination>>,
+    resetToPage1: CallableFunction
 }
 
 export const PaginationContext =
@@ -22,7 +23,16 @@ export function PaginationContextProvider({children}: ContextProviderProps) {
         query: ""
     })
 
-    const value: PaginationContextValue = {postsPagination, setPostsPagination}
+    function resetToPage1() {
+        setPostsPagination((prev) => {
+            return {
+                ...prev,
+                currentPage: 1
+            }
+        });
+    }
+
+    const value: PaginationContextValue = {postsPagination, setPostsPagination, resetToPage1}
 
     return (
         <PaginationContext.Provider value={value}>

@@ -1,23 +1,48 @@
-import {Button, Input} from 'antd';
+import {Button, Input, Upload} from 'antd';
 import {Controller, useForm} from "react-hook-form";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
-import {Post} from "../../models/Post";
+import {NewPost} from "../../models/Post";
 import {useNavigate} from "react-router-dom";
+import {usePaginationContext} from "../../hooks/usePaginationContext";
+import { UploadOutlined } from '@ant-design/icons';
+import {useState} from "react";
 
 export function CreatePostForm() {
     const {TextArea} = Input;
 
     const {addPost} = usePostsAPI();
 
-    const {handleSubmit, control} = useForm<Partial<Post>>();
+    const {resetToPage1} = usePaginationContext();
+
+    const {handleSubmit, control} = useForm<NewPost>();
+
+    const [image, setImage] = useState("");
 
     const navigate = useNavigate();
 
-    function onPostSubmition(data: Partial<Post>) {
-        console.log(data);
-        addPost(data);
-        navigate('/posts');
+    function onPostSubmition(postData: NewPost) {
+        console.log("onSubmit data:", postData);
+        const formData = createFormData(postData);
+        addPost(formData)
+            .then(() => {
+                resetToPage1();
+                navigate('/posts');
+            });
     }
+
+    function createFormData(post: NewPost) {
+        const formData = new FormData();
+        if (post.title) formData.append("title", post.title);
+        if (post.content) formData.append("content", post.content);
+        if (post.image && post.image.file instanceof File) {
+            formData.append("image", post.image.file);
+            console.log("image attached");
+        }
+        return formData;
+    }
+
+
+
     return (
         <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onPostSubmition)}>
             <Controller
@@ -40,6 +65,28 @@ export function CreatePostForm() {
                     </>
                 )}
             />
+            <Controller
+                control={control}
+                name="image"
+                render={( {field: {onChange} }) => (
+                    <>
+                        <Upload name='image'
+                                onChange={onChange}
+                                onRemove={() => setImage("")}
+                                maxCount={1}
+                                beforeUpload={(file) => {
+                                    setImage(URL.createObjectURL(file));
+                                    return false}}
+                        >
+                            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                        </Upload>
+                    </>
+                )}
+            />
+
+            {image && <img src={image} alt='preview'/>}
+
+
             <Button style={{margin: "30px"}} htmlType="submit">Create Post</Button>
 
         </form>

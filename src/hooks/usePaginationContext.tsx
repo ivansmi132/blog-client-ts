@@ -6,5 +6,5 @@ export function usePaginationContext() {
     if (!context) {
         throw new Error("usePaginationContext must be used within PaginationContextProvider");
     }
-    return context
+   return context
 }

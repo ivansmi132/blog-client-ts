@@ -1,9 +1,10 @@
-import React from 'react';
 import {Layout, App, Breadcrumb} from 'antd';
 import { Navbar } from './components/Navbar/Navbar';
 import "./components/styles.css"
 import { Footer } from 'antd/es/layout/layout';
-import { Outlet } from 'react-router-dom';
+import {Link, Outlet} from 'react-router-dom';
+import {BreadcrumbItemType, BreadcrumbSeparatorType} from "antd/lib/breadcrumb/Breadcrumb";
+
 
 
 
@@ -14,16 +15,12 @@ const {
 
 export function MyApp() {
 
+
     return (
             <App>
                 <Layout style={{ minHeight: "100vh" }}>
                     <Navbar />
-                    <Content style={{ padding: '0 48px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
+                    <Content style={{ padding: '0 48px', marginTop: "3%" }}>
                         <div
                             style={{
                                 background: '#a3d9ff',
