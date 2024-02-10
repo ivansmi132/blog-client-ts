@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {Post} from "../models/Post";
 import {usePostsAPI} from "../hooks/usePostsAPI";
-import {Avatar, FloatButton} from "antd";
+import {Avatar, FloatButton, notification} from "antd";
 import {useAuthContext} from "../hooks/useAuthContext";
 import {usePaginationContext} from "../hooks/usePaginationContext";
 import {PostDate} from "../components/PostDate";
@@ -14,7 +14,7 @@ export function SinglePostPage() {
     const {getPostById, deletePostById} = usePostsAPI();
     const [currentPost, setCurrentPost] = useState<Post | null>(null);
     const context = useAuthContext();
-    const {setPostsPagination} = usePaginationContext();
+    const {resetToPage1} = usePaginationContext();
 
 
     function isPostCreator() {
@@ -67,15 +67,19 @@ export function SinglePostPage() {
                                      onClick={() => {
                                          deletePostById(Number(id))
                                              .then(() => {
-                                                 setPostsPagination((prev) => {
-                                                     return {
-                                                         ...prev,
-                                                         currentPage: 1
-                                                     }
-                                                 })
-                                                 navigate('/posts');
-                                             });
-                                     }}/>
+                                                 notification.success(
+                                                     {
+                                                         duration: 3,
+                                                         message: "Post Deleted! Returning you to the posts",
+                                                         onClose: () => {
+                                                             resetToPage1();
+                                                             navigate('/posts');
+                                                         }
+                                                     })
+                                             })
+                                     }
+                                     }
+                                     />
                         }
                     </FloatButton.Group>
 

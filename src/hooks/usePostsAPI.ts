@@ -15,20 +15,16 @@ export function usePostsAPI() {
 
     async function addPost(formData: FormData) {
 
-        await fetch(`${process.env.REACT_APP_API_URL}/posts`,
+        return await fetch(`${process.env.REACT_APP_API_URL}/posts`,
             {method: "POST",
                 credentials: "include",
                 body: formData})
-            .then(() => {
-                alert("Post created!");
-            })
     }
 
     async function deletePostById(id: number) {
-        await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`,
+        return await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`,
             {method: "DELETE",
                 credentials: "include"})
-            .then(() => alert(`success! post ${id} deleted!`));
     }
 
     async function fetchAllPosts() {
@@ -44,13 +40,12 @@ export function usePostsAPI() {
             .then(data => data.json());
     }
 
-    async function editPost(post : Partial<Post>) {
+    async function editPost(formData: FormData, postId: number) {
         await fetch(
-            `${process.env.REACT_APP_API_URL}/posts/${post.id}`,
+            `${process.env.REACT_APP_API_URL}/posts/${postId}`,
             {method: "PUT",
-                headers: {"content-type": "application/json"},
                 credentials: "include",
-                body: JSON.stringify(post)}
+                body: formData}
         );
     }
 

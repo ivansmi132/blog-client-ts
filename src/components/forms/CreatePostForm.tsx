@@ -1,4 +1,4 @@
-import {Button, Input, Upload} from 'antd';
+import {Button, Image, Input, message, notification, Upload} from 'antd';
 import {Controller, useForm} from "react-hook-form";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {NewPost} from "../../models/Post";
@@ -6,9 +6,10 @@ import {useNavigate} from "react-router-dom";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import { UploadOutlined } from '@ant-design/icons';
 import {useState} from "react";
+import {ControlledTextArea} from "./ControlledTextArea";
+import { ControlledUploadImage } from './ControlledUploadImage';
 
 export function CreatePostForm() {
-    const {TextArea} = Input;
 
     const {addPost} = usePostsAPI();
 
@@ -16,7 +17,7 @@ export function CreatePostForm() {
 
     const {handleSubmit, control} = useForm<NewPost>();
 
-    const [image, setImage] = useState("");
+    // const [image, setImage] = useState("");
 
     const navigate = useNavigate();
 
@@ -24,9 +25,14 @@ export function CreatePostForm() {
         console.log("onSubmit data:", postData);
         const formData = createFormData(postData);
         addPost(formData)
-            .then(() => {
-                resetToPage1();
-                navigate('/posts');
+            .then(response => response.json())
+            .then((json) => {
+                console.log(json);
+                notification.success({duration: 3, message: "Post Created! Moving you to the post page", onClose: () => {
+                        resetToPage1();
+                        navigate(`/posts/${json.id}`);
+                    }})
+
             });
     }
 
@@ -45,50 +51,10 @@ export function CreatePostForm() {
 
     return (
         <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onPostSubmition)}>
-            <Controller
-                control={control}
-                name="title"
-                render={( {field: {onChange, value} }) => (
-                    <>
-                    <label htmlFor="title">Title</label>
-                    <TextArea id="title" autoSize={ { minRows: 2 } } onChange={onChange} value={value}></TextArea>
-                    </>
-                )}
-            />
-            <Controller
-                control={control}
-                name="content"
-                render={( {field: {onChange, value} }) => (
-                    <>
-                        <label htmlFor="content">Title</label>
-                        <TextArea id="content" autoSize={ { minRows: 2 } } onChange={onChange} value={value}></TextArea>
-                    </>
-                )}
-            />
-            <Controller
-                control={control}
-                name="image"
-                render={( {field: {onChange} }) => (
-                    <>
-                        <Upload name='image'
-                                onChange={onChange}
-                                onRemove={() => setImage("")}
-                                maxCount={1}
-                                beforeUpload={(file) => {
-                                    setImage(URL.createObjectURL(file));
-                                    return false}}
-                        >
-                            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                        </Upload>
-                    </>
-                )}
-            />
-
-            {image && <img src={image} alt='preview'/>}
-
-
+            <ControlledTextArea name={"title"} control={control}/>
+            <ControlledTextArea name={"content"} control={control}/>
+            <ControlledUploadImage control={control} />
             <Button style={{margin: "30px"}} htmlType="submit">Create Post</Button>
-
         </form>
     )
 

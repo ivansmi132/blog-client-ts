@@ -10,7 +10,7 @@ export const PostsPage = (function PostsPage() {
     } = usePaginationContext();
     const postsSection = useRef<HTMLDivElement>(null);
 
-    const handleUserInput = (value: string) => {
+    const handleUserInput = (value: string, event: any) => {
         setPostsPagination((prev) => {
             return {
                 ...prev,

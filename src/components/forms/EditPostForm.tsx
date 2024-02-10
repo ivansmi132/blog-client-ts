@@ -1,10 +1,12 @@
 import {Button, Input, Image} from "antd";
 import {Controller, useForm} from "react-hook-form";
-import {Post} from "../../models/Post";
+import {NewPost, Post} from "../../models/Post";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
+import {ControlledTextArea} from "./ControlledTextArea";
+import {ControlledUploadImage} from "./ControlledUploadImage";
 
 export function EditPostForm() {
 
@@ -12,17 +14,16 @@ export function EditPostForm() {
 
     let locationData = useLocation();
 
-    const {TextArea} = Input;
-
     const [selectedPost, setSelectedPost] = useState<Post>();
 
     const {getPostById, editPost} = usePostsAPI();
 
-    const {setPostsPagination} = usePaginationContext();
+    const {resetToPage1} = usePaginationContext();
 
     const {handleSubmit, control} = useForm<Post>(
         {values: selectedPost}
     );
+
 
 
     useEffect(() => {
@@ -36,57 +37,34 @@ export function EditPostForm() {
 
     }, []);
 
-    function onEditSubmition(data: Partial<Post>) {
+    function onEditSubmition(data: NewPost) {
         console.log(data);
-        editPost(data)
+        const formData = createFormData(data);
+        editPost(formData, selectedPost!.id)
             .then(() => {
-                setPostsPagination((prev) => {
-                    return {
-                        ...prev,
-                        currentPage: 1
-                    }
-                });
+                resetToPage1();
                 navigate(`/posts/${selectedPost!.id}`);
             });
+    }
+
+    function createFormData(post: NewPost) {
+        const formData = new FormData();
+        if (post.title) formData.append("title", post.title);
+        if (post.content) formData.append("content", post.content);
+        if (post.image && post.image.file instanceof File) {
+            formData.append("image", post.image.file);
+            console.log("image attached");
+        }
+        return formData;
     }
 
 
 
     return (
         <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onEditSubmition)}>
-            <Controller
-                control={control}
-                name="title"
-                render={( {field: {onChange, value} }) => (
-                    <>
-                        <label htmlFor="title">Title</label>
-                        <TextArea id="title" autoSize={ { minRows: 2 } } onChange={onChange} value={value}></TextArea>
-                    </>
-                )}
-            />
-            <Controller
-                control={control}
-                name="content"
-                render={( {field: {onChange, value} }) => (
-                    <>
-                        <label htmlFor="content">Content</label>
-                        <TextArea id="content" autoSize={ { minRows: 2 } } onChange={onChange} value={value}></TextArea>
-                    </>
-                )}
-            />
-
-            <Controller
-                control={control}
-                name="image_url"
-                render={( {field: { value} }) => (
-                    <div style={{marginTop: "30px"}}>
-                        <Image src={value} width={400} />
-                    </div>
-
-                )}
-            />
-
-
+            <ControlledTextArea name={"title"} control={control}/>
+            <ControlledTextArea name={"content"} control={control}/>
+            {selectedPost && <ControlledUploadImage control={control} image_url={selectedPost.image_url} />}
             <Button style={{margin: "30px"}} htmlType="submit">Edit Post</Button>
 
         </form>
