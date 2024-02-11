@@ -1,6 +1,6 @@
 import Search from "antd/es/input/Search";
 import React from "react";
-import { PostsList } from "../components/posts-components/postsList";
+import { PostsList } from "../components/posts-components/PostsList";
 import {usePaginationContext} from "../hooks/usePaginationContext";
 
 export function PostsPage() {

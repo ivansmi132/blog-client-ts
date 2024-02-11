@@ -20,7 +20,6 @@ export function CreatePostForm() {
 
     async function onPostSubmition(postData: NewPost) {
 
-        console.log("onSubmit data:", postData);
         const formData = createFormData(postData);
         const createdPost = await addPost(formData);
         notification.success(

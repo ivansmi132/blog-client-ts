@@ -1,8 +1,7 @@
 import {Button} from "antd";
 import {useForm} from "react-hook-form";
 import {NewPost, Post} from "../../models/Post";
-import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {ControlledTextArea} from "./ControlledTextArea";
@@ -13,14 +12,7 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
 
     const navigate = useNavigate();
 
-    /*
-    the useLocation hook is used to parse the state prop of the react-router-dom Link component
-    upon redirects
-     */
-    let locationData = useLocation();
-
-
-    const {getPostById, editPost} = usePostsAPI();
+    const {editPost} = usePostsAPI();
 
     const {resetToPage1} = usePaginationContext();
 
@@ -29,18 +21,15 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
         {values: selectedPost}
         );
 
-    // useEffect(() => {
-    //
-    //         const postId = locationData.state;
-    //         getPostById(postId)
-    //             .then((post) => setSelectedPost(post));
-    //
-    // }, []);
-
-
     function onEditSubmition(data: NewPost) {
-        console.log(data);
+
         const formData = createFormData(data);
+
+        // this happens if the post did not have an image, or it was removed by the user
+        if (!selectedPost.image_url) {
+            formData.set("image_url", "");
+        }
+
         editPost(formData, selectedPost!.id)
             .then(() => {
                 resetToPage1();
@@ -50,11 +39,23 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
 
 
     return (
-        <form style={{width: "50%", margin: "auto"}} onSubmit={handleSubmit(onEditSubmition)}>
+        <form style={{width: "50%", margin: "auto"}}
+              onSubmit={handleSubmit(onEditSubmition)}>
+
             <ControlledTextArea name={"title"} control={control}/>
+
             <ControlledTextArea name={"content"} control={control}/>
-            {selectedPost && <ControlledUploadImage control={control} image_url={selectedPost.image_url} />}
-            <Button style={{margin: "30px"}} htmlType="submit">Edit Post</Button>
+
+            {selectedPost &&
+                <ControlledUploadImage
+                    control={control}
+                    image_url={selectedPost.image_url}
+                />
+            }
+
+            <Button style={{margin: "30px"}} htmlType="submit">
+                Edit Post
+            </Button>
 
         </form>
     )

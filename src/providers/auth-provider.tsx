@@ -23,28 +23,30 @@ export function AuthContextProvider({children}: ContextProviderProps) {
         logIn();
     }, [])
 
-    function logIn() {
-        fetch(`${process.env.REACT_APP_API_URL}/auth/login`,
-            {credentials: "include"})
-            .then(data => data.json())
-            .then(json => {
-                if (!json) {return}
-                console.log("user info", json);
-                setUser(json);
-            })
-            .catch((err) =>
-            console.log("Error checking authentication status:", (err as Error).message))
-            .finally(() => setCheckingAuthStatus(false));
+    async function logIn() {
+
+        try {
+            const user = await fetch(
+                `${process.env.REACT_APP_API_URL}/auth/login`,
+                {credentials: "include"}).then(res => res.json());
+            setUser(user);
+
+        } catch (error) {
+        } finally {
+            setCheckingAuthStatus(false);
+        }
     }
 
-    function logOut() {
-        fetch(`${process.env.REACT_APP_API_URL}/auth/logout`,
-            {credentials: "include"})
-            .then(() => {
-                setUser(null);
-                setCheckingAuthStatus(true);
-                logIn();
-            })
+    async function logOut() {
+        try {
+            await fetch(
+                `${process.env.REACT_APP_API_URL}/auth/logout`,
+                {credentials: "include"});
+            setUser(null);
+            setCheckingAuthStatus(true);
+            await logIn();
+        } catch (error) {
+        }
     }
 
     const value: AuthContextValue = {user, logOut, checkingAuthStatus, setCheckingAuthStatus};

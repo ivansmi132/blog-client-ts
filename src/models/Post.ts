@@ -14,4 +14,5 @@ export interface NewPost {
     title: string,
     content: string,
     image?: any;
+    image_url?: string;
 }

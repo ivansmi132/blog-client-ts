@@ -25,10 +25,15 @@
     gap: 20px;
 }
 
-.post-container {
+.post-card1 {
     height: 248px;
-
 }
+
+.post-card {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 /*.main-section {*/
 /*    padding-top: 4%;*/
@@ -59,8 +64,8 @@
 
 
 .btn {
-    position: relative;
-    top: 40px;
+    position: absolute;
+    top: 200px;
     background: tomato;
     border: 1px solid #EA9C28;
     padding: 3px;

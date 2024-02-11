@@ -27,7 +27,7 @@ export function PostsList() {
 
         fetchPosts().then(() => setLoading(false));
 
-    }, [postsPagination.currentPage]);
+    }, [postsPagination]);
 
     async function fetchPosts() {
         const fetchedPosts = await fetchAllPosts();
@@ -41,10 +41,19 @@ export function PostsList() {
         <>
             <div className={"posts-list"}>
                 {posts.list.map((post) =>
-                    <PostCard setLoading={setLoading} loading={loading} key={post.id} post={post}/>
+                    <PostCard
+                        setLoading={setLoading}
+                        loading={loading}
+                        key={post.id}
+                        post={post}/>
                 )}
             </div>
-            <PostsPagination currentNumberOfPosts={posts.totalPostsNumber} setLoading={setLoading} />
+
+            <PostsPagination
+                currentNumberOfPosts={posts.totalPostsNumber}
+                setLoading={setLoading}
+            />
+
         </>
     )
 }

@@ -11,22 +11,23 @@ export function UserMenu() {
 
     const items: MenuProps['items'] = [
         {
-            label: 'Logout',
-            key: '1',
+            label: 'Create Post',
+            key: '1'
         },
         {
-            label: 'Create Post',
-            key: '2'
+            label: 'Logout',
+            key: '2',
         }
     ];
 
     const onClick: MenuProps['onClick'] = ({ key }) => {
         switch (key) {
-            case "1":
+            case '1':
+                navigate('/create_post');
+                break;
+            case "2":
                 authContext.logOut();
                 break;
-            case '2':
-                navigate('/create_post');
         }
     };
 

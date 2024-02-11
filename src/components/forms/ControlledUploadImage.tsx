@@ -4,8 +4,18 @@ import {UploadOutlined} from "@ant-design/icons";
 import {useState} from "react";
 import {Image} from 'antd';
 
-export function ControlledUploadImage({control, image_url}: {control: Control<any>, image_url?: string}) {
+interface ControlledUploadImageProps {
+    control: Control<any>,
+    image_url?: string
+}
+
+/*
+This is the way to integrate custom components with react-hook-form
+for documentation, see: https://react-hook-form.com/docs/usecontroller/controller
+ */
+export function ControlledUploadImage({control, image_url} :ControlledUploadImageProps) {
     const [previewImage, setPreviewImage] = useState(image_url);
+
     return (
         <Controller
             control={control}

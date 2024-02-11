@@ -3,12 +3,19 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {usePostsAPI} from "../hooks/usePostsAPI";
 import {Post} from "../models/Post";
+import { Spin } from "antd";
 
 export function PostEditPage() {
-    let locationData = useLocation();
-    const {getPostById} = usePostsAPI();
-    const [selectedPost, setSelectedPost] = useState<Post>();
 
+    /*
+    the useLocation hook is used to parse the state prop of the react-router-dom Link component
+    upon redirects
+     */
+    let locationData = useLocation();
+
+    const {getPostById} = usePostsAPI();
+
+    const [selectedPost, setSelectedPost] = useState<Post>();
 
     useEffect(() => {
 
@@ -23,6 +30,10 @@ export function PostEditPage() {
         return <h1>no selected post to edit</h1>
     }
 
-    return (selectedPost ? <EditPostForm selectedPost={selectedPost} />
-    :  <h1>Loading</h1>);
+    return (
+        selectedPost ?
+            <EditPostForm selectedPost={selectedPost} />
+                :
+            <Spin />
+    );
 }
