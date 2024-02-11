@@ -1,9 +1,9 @@
-import {useEffect, useRef, useState} from "react";
-import {Pagination} from "antd";
+import {useEffect, useState} from "react";
 import {PostCard} from "./postCard";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {Post} from "../../models/Post";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
+import {PostsPagination} from "../PostsPagination";
 
 
 interface PostsState {
@@ -13,58 +13,38 @@ interface PostsState {
 
 export function PostsList() {
 
-    const {postsPagination, setPostsPagination} = usePaginationContext();
-
-    const {fetchAllPosts} = usePostsAPI();
-
     const [posts, setPostsData]
         = useState<PostsState>({list: [], totalPostsNumber: 0});
 
-    const postsSection = useRef<HTMLDivElement>(null);
-
+    // improving user experience by displaying loading indicators on post cards
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchPosts().then(() => setLoading(false))
-    }, [postsPagination]);
+    const {postsPagination} = usePaginationContext();
 
-    const fetchPosts = async() => {
-        return await fetchAllPosts()
-            .then(fetchedPosts => {
-                console.log(fetchedPosts);
-                setPostsData(() => {
-                    return {
-                        list: fetchedPosts.posts,
-                        totalPostsNumber: fetchedPosts.posts_number
-                    }
-                })
-            })
+    const {fetchAllPosts} = usePostsAPI();
+
+    useEffect(() => {
+
+        fetchPosts().then(() => setLoading(false));
+
+    }, [postsPagination.currentPage]);
+
+    async function fetchPosts() {
+        const fetchedPosts = await fetchAllPosts();
+        setPostsData(() => ({
+            list: fetchedPosts.posts,
+            totalPostsNumber: fetchedPosts.posts_number
+        }));
     }
 
     return (
         <>
-            <div ref={postsSection} className={"posts-list"}>
+            <div className={"posts-list"}>
                 {posts.list.map((post) =>
                     <PostCard setLoading={setLoading} loading={loading} key={post.id} post={post}/>
                 )}
             </div>
-            <div style={{display: "flex", justifyContent: "center", marginTop: "2%"}}>
-                <Pagination current={postsPagination.currentPage}
-                            total={posts.totalPostsNumber}
-                            pageSize={postsPagination.pageSize}
-                            hideOnSinglePage
-                            showSizeChanger={false}
-                            onChange={(page, pageSize) => {
-                    setPostsPagination((prev) => {
-                        return {
-                            ...prev,
-                            currentPage: postsPagination.pageSize !== pageSize ? 1 : page,
-                            pageSize: pageSize
-                        }});
-                    setLoading(true);
-                    postsSection.current?.scrollIntoView();
-                }}/>
-            </div>
+            <PostsPagination currentNumberOfPosts={posts.totalPostsNumber} setLoading={setLoading} />
         </>
     )
 }

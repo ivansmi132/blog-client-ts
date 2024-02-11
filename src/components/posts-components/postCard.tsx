@@ -12,7 +12,7 @@ interface PostCardProps {
 }
 
 export function PostCard({post, loading, setLoading}: PostCardProps) {
-    const { title, image_url, creation_date, user} = post;
+    const { title, image_url, user} = post;
 
 
     return (

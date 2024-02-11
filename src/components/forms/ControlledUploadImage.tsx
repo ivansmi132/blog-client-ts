@@ -2,9 +2,10 @@ import {Control, Controller} from "react-hook-form";
 import {Button, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
 import {useState} from "react";
+import {Image} from 'antd';
 
 export function ControlledUploadImage({control, image_url}: {control: Control<any>, image_url?: string}) {
-    const [image, setImage] = useState(image_url);
+    const [previewImage, setPreviewImage] = useState(image_url);
     return (
         <Controller
             control={control}
@@ -13,15 +14,15 @@ export function ControlledUploadImage({control, image_url}: {control: Control<an
                 <>
                     <Upload name='image'
                             onChange={onChange}
-                            onRemove={() => setImage("")}
+                            onRemove={() => setPreviewImage("")}
                             maxCount={1}
                             beforeUpload={(file) => {
-                                setImage(URL.createObjectURL(file));
+                                setPreviewImage(URL.createObjectURL(file));
                                 return false}}
                     >
                         <Button icon={<UploadOutlined />}>Click to Upload</Button>
                     </Upload>
-                    {image && <img src={image} width={200} alt='preview'/>}
+                    {previewImage && <Image src={previewImage} width={200} alt='preview'/>}
                 </>
             )}
         />

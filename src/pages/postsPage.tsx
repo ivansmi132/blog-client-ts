@@ -1,16 +1,17 @@
 import Search from "antd/es/input/Search";
-import {useRef} from "react";
+import React from "react";
 import { PostsList } from "../components/posts-components/postsList";
 import {usePaginationContext} from "../hooks/usePaginationContext";
 
-export const PostsPage = (function PostsPage() {
+export function PostsPage() {
+
     const {
         postsPagination,
         setPostsPagination,
     } = usePaginationContext();
-    const postsSection = useRef<HTMLDivElement>(null);
 
     const handleUserInput = (value: string, event: any) => {
+
         setPostsPagination((prev) => {
             return {
                 ...prev,
@@ -23,14 +24,18 @@ export const PostsPage = (function PostsPage() {
     return (
         <>
             <h1 className="header">Posts</h1>
-            <div ref={postsSection}>
-                <div style={{textAlign: "center", marginBottom: "2%"}}>
-                    <Search placeholder="search by title ..." defaultValue={postsPagination.query} allowClear
-                            onSearch={handleUserInput} style={{width: 200}}/>
-                </div>
-                <PostsList/>
+
+            <div style={{textAlign: "center", marginBottom: "2%"}}>
+                <Search style={{width: 200}}
+                        placeholder="search by title ..."
+                        defaultValue={postsPagination.query}
+                        allowClear
+                        onSearch={handleUserInput}
+                        />
             </div>
+
+            <PostsList/>
 
         </>
     );
-})
+}
