@@ -36,8 +36,9 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
         await editPost(formData, selectedPost!.id);
         notification.success(
             {
-                duration: 3,
+                duration: 2.5,
                 message: "Post Edited! Moving to the post page",
+                placement: "top",
                 onClose: () => {
                     resetToPage1();
                     navigate(`/posts/${selectedPost.id}`);

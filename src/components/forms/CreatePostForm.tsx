@@ -27,8 +27,9 @@ export function CreatePostForm() {
         const createdPost = await addPost(formData);
         notification.success(
             {
-                duration: 3,
+                duration: 2,
                 message: "Post Created! Moving to the post page",
+                placement: "top",
                 onClose: () => {
                     resetToPage1();
                     navigate(`/posts/${createdPost.id}`);

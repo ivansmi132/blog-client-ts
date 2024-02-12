@@ -26,6 +26,7 @@ export function SinglePostMenu({currentPost}: {currentPost: Post}) {
             notification.success({
                 duration: 2.5,
                 message: "Post Deleted, navigating back to posts!",
+                placement: "top",
                 onClose: () => {
                     resetToPage1();
                     navigate('/posts');
@@ -43,7 +44,7 @@ export function SinglePostMenu({currentPost}: {currentPost: Post}) {
 
     return (
 
-    <FloatButton.Group shape="circle" style={{right: 24}}>
+    <FloatButton.Group shape="circle" style={{right: "70px"}}>
 
         {(isAdmin() || isPostCreator()) &&
             <FloatButton
