@@ -1,0 +1,39 @@
+.main-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #A3D9FF
+}
+
+.main-navbar-name {
+    text-align: center;
+    padding-bottom: 8px;
+    font-size: 40px !important;
+}
+
+.main-navbar-menu {
+    flex: 1;
+    min-width: 0;
+    background-color: #A3D9FF;
+    display: flex;
+    justify-content: center
+}
+
+.transparent {
+    background: transparent;
+    border: none
+}
+
+.navbar-user-profile-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-user-profile-container a {
+    color:black;
+}
+.navbar-user-profile-container a:hover {
+    color:tomato;
+}

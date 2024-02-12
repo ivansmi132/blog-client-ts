@@ -1,45 +1,29 @@
-import React from 'react';
-import {Layout, App, Breadcrumb} from 'antd';
-import { Navbar } from './components/navbar';
-import "./components/styles.css"
-import { Footer } from 'antd/es/layout/layout';
-import { Outlet } from 'react-router-dom';
+import {Layout, App} from 'antd';
+import { Navbar } from './components/navigation/Navbar';
+import "./styles/styles.css"
+import {Outlet} from 'react-router-dom';
+import { Footer } from './components/Footer';
 
-
-
-const {
-    Content,
-} = Layout;
-
+const {Content} = Layout;
 
 export function MyApp() {
 
+
     return (
             <App>
+
                 <Layout style={{ minHeight: "100vh" }}>
+
                     <Navbar />
-                    <Content style={{ padding: '0 48px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <div
-                            style={{
-                                background: '#a3d9ff',
-                                minHeight: 280,
-                                padding: 24,
-                                borderRadius: 10,
-                            }}
-                        >
+
+                    <Content style={{ padding: '0 48px', marginTop: "3%" }}>
+                        <div className="main-page-container">
                             <Outlet />
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>
-                        Ivan's Blog ©{new Date().getFullYear()}
-                    </Footer>
                 </Layout>
 
+                <Footer />
             </App>
   );
 }

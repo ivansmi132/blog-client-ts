@@ -1,5 +1,7 @@
 export interface User {
     name: string,
-    id: number,
-    picture_url: string;
+    sub: string,
+    picture: string,
+    email: string,
+    is_admin: boolean
 }
