@@ -4,7 +4,8 @@ import {ContextProviderProps} from "../models/ContextProviderProps";
 interface Pagination {
     currentPage: number,
     pageSize: number,
-    query: string
+    query: string,
+    type: string
 }
 
 interface PaginationContextValue {
@@ -20,7 +21,8 @@ export function PaginationContextProvider({children}: ContextProviderProps) {
     const [postsPagination, setPostsPagination] = useState<Pagination>({
         currentPage: 1,
         pageSize: 5,
-        query: ""
+        query: "",
+        type: "title"
     })
 
     function resetToPage1() {

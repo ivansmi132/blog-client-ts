@@ -4,9 +4,10 @@ import {NewPost, Post} from "../../models/Post";
 import {useNavigate} from "react-router-dom";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
-import {ControlledTextArea} from "./ControlledTextArea";
-import {ControlledUploadImage} from "./ControlledUploadImage";
+import {ControlledTextArea} from "../form-parts/ControlledTextArea";
+import {ControlledUploadImage} from "../form-parts/ControlledUploadImage";
 import {createFormData} from "../../utils/createFormData";
+import {useState} from "react";
 
 export function EditPostForm({selectedPost}: {selectedPost: Post}) {
 
@@ -16,9 +17,14 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
 
     const {resetToPage1} = usePaginationContext();
 
+    // resetKey is used as key for ControlledImageUpload to make it remount
+    // upon clicking reset button
+    const [resetKey, setResetKey] = useState("1");
+
     const {
         handleSubmit,
         control,
+        reset
     } = useForm<Post>({
             values: selectedPost,
             shouldFocusError: false});
@@ -26,12 +32,6 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
     async function onEditSubmition(data: NewPost) {
 
         const formData = createFormData(data);
-
-        // this happens if the post did not have an image, or it was removed by the user
-        // needs some work!
-        if (!selectedPost.image_url) {
-            formData.set("image_url", "");
-        }
 
         await editPost(formData, selectedPost!.id);
         notification.success(
@@ -44,11 +44,16 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
                 }
             }
         );
+    }
 
+    function onReset() {
+        reset();
+        setResetKey((prev) =>
+            (Number(prev) + 1).toString())
     }
 
     return (
-        <form style={{width: "50%", margin: "auto"}}
+        <form className="form"
               onSubmit={handleSubmit(onEditSubmition)}>
 
             <ControlledTextArea name={"title"}
@@ -61,12 +66,17 @@ export function EditPostForm({selectedPost}: {selectedPost: Post}) {
 
             {selectedPost &&
                 <ControlledUploadImage
+                    key={resetKey}
                     control={control}
                     image_url={selectedPost.image_url}
                 />
             }
 
-            <Button style={{margin: "30px"}} htmlType="submit">
+            <Button style={{maxWidth: "150px"}} onClick={onReset}>
+                Reset to Original
+            </Button>
+
+            <Button style={{maxWidth: "100px"}} htmlType="submit">
                 Edit Post
             </Button>
 

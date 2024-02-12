@@ -1,6 +1,6 @@
 import {CreatePostForm} from "../components/forms/CreatePostForm";
 import {useAuthContext} from "../hooks/useAuthContext";
-import {UnauthorizedPage} from "./UnauthorizedPage";
+import {UnauthorizedPage} from "./error-pages/UnauthorizedPage";
 
 export function PostCreationPage() {
 

@@ -1,14 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import {MyApp} from './App';
-import {Homepage} from "./pages/homepage";
-import {PostsPage} from "./pages/postsPage";
-import {SinglePostPage} from "./pages/singlePostPage";
-import {AdminPage} from "./pages/adminPage";
-import {PostCreationPage} from "./pages/postCreationPage";
-import {PostEditPage} from "./pages/postEditPage";
-import {NotFoundPage} from "./pages/NotFoundPage";
-import {UnauthorizedPage} from "./pages/UnauthorizedPage";
-import {ServerErrorPage} from "./pages/ServerErrorPage";
+import {Homepage} from "./pages/Homepage";
+import {PostsPage} from "./pages/PostsPage";
+import {SinglePostPage} from "./pages/SinglePostPage";
+import {AdminPage} from "./pages/AdminPage";
+import {PostCreationPage} from "./pages/CreatePostPage";
+import {EditPostPage} from "./pages/EditPostPage";
+import {NotFoundPage} from "./pages/error-pages/NotFoundPage";
+import {UnauthorizedPage} from "./pages/error-pages/UnauthorizedPage";
+import {ServerErrorPage} from "./pages/error-pages/ServerErrorPage";
 
 
 export const router = createBrowserRouter([
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:"edit_post",
-                element: <PostEditPage />
+                element: <EditPostPage />
             },
             {
                 path: "not_found",

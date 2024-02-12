@@ -7,9 +7,7 @@ export function PostCreatorInfo({user}: {user: User}) {
         <div className="post-creator-info">
 
             <p>by</p>
-
             <Avatar size={26} src={user.picture} />
-
             <p>{user.name}</p>
 
         </div>

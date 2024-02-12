@@ -28,5 +28,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px
+    gap: 10px;
+}
+
+.navbar-user-profile-container a {
+    color:black;
+}
+.navbar-user-profile-container a:hover {
+    color:tomato;
 }

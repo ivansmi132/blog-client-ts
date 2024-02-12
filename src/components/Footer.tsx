@@ -7,7 +7,7 @@ export function Footer() {
 
     return (
         <Footer style={{ textAlign: 'center' }}>
-            OurBlog ©{new Date().getFullYear()}
+            OurBlog ©{new Date().getFullYear()} Fullstack project by Ivan Smirnov
         </Footer>
     )
 }

@@ -4,8 +4,8 @@ import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {NewPost} from "../../models/Post";
 import {useNavigate} from "react-router-dom";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
-import {ControlledTextArea} from "./ControlledTextArea";
-import {ControlledUploadImage} from './ControlledUploadImage';
+import {ControlledTextArea} from "../form-parts/ControlledTextArea";
+import {ControlledUploadImage} from '../form-parts/ControlledUploadImage';
 import {createFormData} from "../../utils/createFormData";
 
 export function CreatePostForm() {
@@ -38,7 +38,7 @@ export function CreatePostForm() {
     }
 
     return (
-        <form style={{width: "50%", margin: "auto"}}
+        <form className="form"
               onSubmit={handleSubmit(onPostSubmition)}>
 
             <ControlledTextArea name={"title"}
@@ -51,7 +51,7 @@ export function CreatePostForm() {
 
             <ControlledUploadImage control={control} />
 
-            <Button style={{margin: "30px"}} htmlType="submit">
+            <Button style={{maxWidth: "100px"}} htmlType="submit">
                 Create Post
             </Button>
 

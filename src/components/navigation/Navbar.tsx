@@ -2,13 +2,14 @@ import {Menu, MenuProps} from "antd";
 import React from "react";
 import {
      TeamOutlined,
-    UserOutlined
+    HomeOutlined,
+    ReadOutlined
 } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
 import {useAuthContext} from "../../hooks/useAuthContext";
 import {UserMenu} from "./UserMenu";
-import './navigation.css';
+import '../../styles/navigation.css';
 
 
 
@@ -20,12 +21,12 @@ export function Navbar() {
     const items: MenuProps['items'] = [
         {
             key: "/",
-            icon: React.createElement(TeamOutlined),
+            icon: React.createElement(HomeOutlined),
             label: "Home"
         },
         {
             key: "/posts",
-            icon: React.createElement(UserOutlined),
+            icon: React.createElement(ReadOutlined),
             label: "Posts"
         },
         authContext.user?.is_admin ?
@@ -43,7 +44,7 @@ export function Navbar() {
         <Header className="main-navbar">
 
             <h1 className="header main-navbar-name">
-                My Blog
+                Our Blog
             </h1>
 
             <Menu

@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {PostCard} from "./postCard";
+import {PostCard} from "./PostCard";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {Post} from "../../models/Post";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {PostsPagination} from "../PostsPagination";
+import {useNavigate} from "react-router-dom";
 
 
 interface PostsState {
@@ -23,17 +24,24 @@ export function PostsList() {
 
     const {fetchAllPosts} = usePostsAPI();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         fetchPosts()
             .then(() => setLoading(false));
     }, [postsPagination]);
 
     async function fetchPosts() {
-        const fetchedPosts = await fetchAllPosts();
-        setPostsData({
-            list: fetchedPosts.posts,
-            totalPostsNumber: fetchedPosts.posts_number
-        });
+
+        try {
+            const fetchedPosts = await fetchAllPosts();
+            setPostsData({
+                list: fetchedPosts.posts,
+                totalPostsNumber: fetchedPosts.posts_number
+            });
+        } catch {
+            navigate('/server_error');
+        }
     }
 
     return (

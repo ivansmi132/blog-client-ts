@@ -21,15 +21,20 @@ export function SinglePostMenu({currentPost}: {currentPost: Post}) {
     }
 
     async function onDelete() {
-        await deletePostById(currentPost.id);
-        notification.success({
-            duration: 2.5,
-            message: "Post Deleted, navigating back to posts!",
-            onClose: () => {
-                resetToPage1();
-                navigate('/posts');
-            }
-        })
+        try {
+            await deletePostById(currentPost.id);
+            notification.success({
+                duration: 2.5,
+                message: "Post Deleted, navigating back to posts!",
+                onClose: () => {
+                    resetToPage1();
+                    navigate('/posts');
+                }
+            })
+        } catch {
+            navigate('/server_error');
+        }
+
     }
 
     async function onEdit() {

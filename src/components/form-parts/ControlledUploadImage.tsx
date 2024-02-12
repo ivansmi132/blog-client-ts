@@ -1,12 +1,12 @@
 import {Control, Controller} from "react-hook-form";
 import {Button, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Image} from 'antd';
 
 interface ControlledUploadImageProps {
     control: Control<any>,
-    image_url?: string
+    image_url?: string,
 }
 
 /*
@@ -21,7 +21,7 @@ export function ControlledUploadImage({control, image_url} :ControlledUploadImag
             control={control}
             name="image"
             render={( {field: {onChange, value} }) => (
-                <>
+                <div className="image-upload-container">
                     <Upload name='image'
                             onChange={onChange}
                             onRemove={() => setPreviewImage("")}
@@ -31,16 +31,20 @@ export function ControlledUploadImage({control, image_url} :ControlledUploadImag
                                 // we return false to ignore the default xhr request of Upload
                                 return false}}>
 
-                        <Button icon={<UploadOutlined />}>
-                            Click to Upload
+                        <Button className="upload-button" icon={<UploadOutlined />}>
+                            Upload Image (Optional)
                         </Button>
                     </Upload>
 
                     {previewImage &&
-                        <Image src={previewImage}
-                               width={200}
-                               alt='preview'/>}
-                </>
+                        <div>
+                            <p>Preview:</p>
+                            <Image src={previewImage}
+                                   width={200}
+                                   alt='preview'/>
+                        </div>
+                    }
+                </div>
             )}
         />
     )

@@ -1,5 +1,5 @@
 import {useAuthContext} from "../hooks/useAuthContext";
-import {UnauthorizedPage} from "./UnauthorizedPage";
+import {UnauthorizedPage} from "./error-pages/UnauthorizedPage";
 
 export function AdminPage() {
 
@@ -10,7 +10,11 @@ export function AdminPage() {
     return (
         isAdmin() ?
             <div style={{textAlign: "center"}}>
-                <h1>Admin page!</h1>
+                <h1 className="header">Admin</h1>
+                <ul>
+                    <li>You can edit all posts</li>
+                    <li>You can delete posts</li>
+                </ul>
             </div>
             :
             <UnauthorizedPage />

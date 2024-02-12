@@ -22,11 +22,13 @@ export function ControlledTextArea({name, control, maxLength}: ControlledTextAre
             render={(
                 {field: {onChange, value, name},
                     formState: {errors}}) => (
-                <>
+                <div>
+
                     <label htmlFor={name}
                            style={errors[name] && {color: "red"}}>
                         {capitalize(name)}
                     </label>
+
                     <TextArea id={name}
                               autoSize={{ minRows: 2 }}
                               onChange={onChange}
@@ -35,11 +37,13 @@ export function ControlledTextArea({name, control, maxLength}: ControlledTextAre
                               showCount
                               status={errors[name] ? 'error' : ''}
                     />
+
                     {errors[name] &&
                         <p style={{color:"red"}}>
                             {`${errors[name]?.message}`}
-                        </p>}
-                </>
+                        </p>
+                    }
+                </div>
             )}
         />
     )

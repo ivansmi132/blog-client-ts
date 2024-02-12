@@ -3,6 +3,7 @@ import React from "react";
 import {useAuthContext} from "../../hooks/useAuthContext";
 import {useNavigate} from "react-router-dom";
 import {User} from "../../models/User";
+import {DownOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
 
 export function UserProfileMenu({user} : {user: User}) {
 
@@ -12,11 +13,16 @@ export function UserProfileMenu({user} : {user: User}) {
     const items: MenuProps['items'] = [
         {
             label: 'Create Post',
-            key: '1'
+            key: '1',
+            icon: React.createElement(EditOutlined)
+        },
+        {
+            type: "divider"
         },
         {
             label: 'Logout',
             key: '2',
+            icon: React.createElement(LogoutOutlined)
         }
     ];
 
@@ -34,11 +40,12 @@ export function UserProfileMenu({user} : {user: User}) {
     return (
         <div className="navbar-user-profile-container">
 
-            <Dropdown menu={{items, onClick}} trigger={['click']}>
+            <Dropdown menu={{items, onClick}} trigger={['click']} arrow>
 
                 <a onClick={(e) =>
                     e.preventDefault()}>
                     Welcome, {user.name}
+                    <DownOutlined style={{marginLeft: "5px"}} />
                 </a>
 
             </Dropdown>
