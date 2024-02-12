@@ -32,7 +32,10 @@ export function PaginationContextProvider({children}: ContextProviderProps) {
         });
     }
 
-    const value: PaginationContextValue = {postsPagination, setPostsPagination, resetToPage1}
+    const value: PaginationContextValue = {
+        postsPagination,
+        setPostsPagination,
+        resetToPage1}
 
     return (
         <PaginationContext.Provider value={value}>

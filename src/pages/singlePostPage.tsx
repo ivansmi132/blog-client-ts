@@ -15,7 +15,7 @@ export function SinglePostPage() {
 
     useEffect(() => {
         getPostById(Number(id))
-            .then(post => setCurrentPost(post));
+            .then(post => setCurrentPost(post))
     }, [])
 
     if (!currentPost) {

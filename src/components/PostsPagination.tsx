@@ -11,24 +11,22 @@ export function PostsPagination({currentNumberOfPosts, setLoading}: PostsPaginat
 
     function onPageChange(page: number, pageSize: number) {
 
-            setPostsPagination((prev) => (
-                {
-                    ...prev,
-                    // antd Pagination component supports adjusting pageSize
-                    // when pageSize changes, we move to cause a render to the component
-                    // and move to the first page
-                    currentPage: postsPagination.pageSize !== pageSize ? 1 : page,
-                    pageSize: pageSize
-                }));
+        // on pageSize change we move to the first page
+        // antd Pagination component supports pageSize, it's currently disabled
+        setPostsPagination((prev) => (
+            {
+                ...prev,
+                currentPage: postsPagination.pageSize !== pageSize ? 1 : page,
+                pageSize: pageSize
+            }));
 
-            setLoading(true);
-
-            window.scrollTo(0, 0);
-        }
+        setLoading(true);
+        window.scrollTo(0, 0);
+    }
 
 
     return (
-        <div style={{display: "flex", justifyContent: "center", marginTop: "2%"}}>
+        <div className="pagination-container">
             <Pagination current={postsPagination.currentPage}
                         total={currentNumberOfPosts}
                         pageSize={postsPagination.pageSize}

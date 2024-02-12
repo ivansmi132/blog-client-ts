@@ -1,9 +1,8 @@
-import {Layout, App, Breadcrumb} from 'antd';
-import { Navbar } from './components/Navbar/Navbar';
+import {Layout, App} from 'antd';
+import { Navbar } from './components/navigation/Navbar';
 import "./components/styles.css"
-import { Footer } from 'antd/es/layout/layout';
-import {Link, Outlet} from 'react-router-dom';
-import {BreadcrumbItemType, BreadcrumbSeparatorType} from "antd/lib/breadcrumb/Breadcrumb";
+import {Outlet} from 'react-router-dom';
+import { Footer } from './components/Footer';
 
 
 
@@ -32,11 +31,10 @@ export function MyApp() {
                             <Outlet />
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>
-                        Ivan's Blog ©{new Date().getFullYear()}
-                    </Footer>
+
                 </Layout>
 
+                <Footer />
             </App>
   );
 }

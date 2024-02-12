@@ -1,9 +1,10 @@
 import React from "react";
 
-export function Header({title}: {title: string}) {
+export function PageHeading({heading}: {heading: string}) {
+
     return (
         <h1 className="header">
-            {title}
+            {heading}
         </h1>
     )
 }

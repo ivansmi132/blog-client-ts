@@ -1,9 +1,9 @@
-import {NewPost} from "./Post";
+import {NewPost} from "../models/Post";
 
 /*
 FormData can be used to send files over HTTP post requests, along with regular form inputs.
-The browser automatically sets the content type header to multipart/form-data
-when the request body is set with a FormData object.
+Once the request body is set with a FormData object, the browser automatically sets the
+content type header to 'multipart/form-data'
  */
 export function createFormData(post: NewPost) {
 

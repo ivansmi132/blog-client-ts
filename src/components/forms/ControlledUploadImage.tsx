@@ -10,7 +10,7 @@ interface ControlledUploadImageProps {
 }
 
 /*
-This is the way to integrate custom components with react-hook-form
+This is the way to integrate external controlled components with react-hook-form
 for documentation, see: https://react-hook-form.com/docs/usecontroller/controller
  */
 export function ControlledUploadImage({control, image_url} :ControlledUploadImageProps) {
@@ -28,11 +28,18 @@ export function ControlledUploadImage({control, image_url} :ControlledUploadImag
                             maxCount={1}
                             beforeUpload={(file) => {
                                 setPreviewImage(URL.createObjectURL(file));
-                                return false}}
-                    >
-                        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                                // we return false to ignore the default xhr request of Upload
+                                return false}}>
+
+                        <Button icon={<UploadOutlined />}>
+                            Click to Upload
+                        </Button>
                     </Upload>
-                    {previewImage && <Image src={previewImage} width={200} alt='preview'/>}
+
+                    {previewImage &&
+                        <Image src={previewImage}
+                               width={200}
+                               alt='preview'/>}
                 </>
             )}
         />

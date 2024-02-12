@@ -24,17 +24,16 @@ export function PostsList() {
     const {fetchAllPosts} = usePostsAPI();
 
     useEffect(() => {
-
-        fetchPosts().then(() => setLoading(false));
-
+        fetchPosts()
+            .then(() => setLoading(false));
     }, [postsPagination]);
 
     async function fetchPosts() {
         const fetchedPosts = await fetchAllPosts();
-        setPostsData(() => ({
+        setPostsData({
             list: fetchedPosts.posts,
             totalPostsNumber: fetchedPosts.posts_number
-        }));
+        });
     }
 
     return (

@@ -25,11 +25,6 @@ export function PostEditPage() {
 
     }, []);
 
-
-    if (!locationData.state) {
-        return <h1>no selected post to edit</h1>
-    }
-
     return (
         selectedPost ?
             <EditPostForm selectedPost={selectedPost} />

@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {usePaginationContext} from "../../hooks/usePaginationContext";
 import {ControlledTextArea} from "./ControlledTextArea";
 import {ControlledUploadImage} from './ControlledUploadImage';
-import {createFormData} from "../../models/createFormData";
+import {createFormData} from "../../utils/createFormData";
 
 export function CreatePostForm() {
 
@@ -14,7 +14,10 @@ export function CreatePostForm() {
 
     const {resetToPage1} = usePaginationContext();
 
-    const {handleSubmit, control} = useForm<NewPost>();
+    const {
+        handleSubmit,
+        control,
+    } = useForm<NewPost>({shouldFocusError: false});
 
     const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ export function CreatePostForm() {
         notification.success(
             {
                 duration: 3,
-                message: "Post Created! Moving you to the post page",
+                message: "Post Created! Moving to the post page",
                 onClose: () => {
                     resetToPage1();
                     navigate(`/posts/${createdPost.id}`);
@@ -38,9 +41,13 @@ export function CreatePostForm() {
         <form style={{width: "50%", margin: "auto"}}
               onSubmit={handleSubmit(onPostSubmition)}>
 
-            <ControlledTextArea name={"title"} control={control}/>
+            <ControlledTextArea name={"title"}
+                                control={control}
+                                maxLength={100}/>
 
-            <ControlledTextArea name={"content"} control={control}/>
+            <ControlledTextArea name={"content"}
+                                control={control}
+                                maxLength={5000} />
 
             <ControlledUploadImage control={control} />
 

@@ -6,6 +6,10 @@ import {SinglePostPage} from "./pages/singlePostPage";
 import {AdminPage} from "./pages/adminPage";
 import {PostCreationPage} from "./pages/postCreationPage";
 import {PostEditPage} from "./pages/postEditPage";
+import {NotFoundPage} from "./pages/NotFoundPage";
+import {UnauthorizedPage} from "./pages/UnauthorizedPage";
+import {ServerErrorPage} from "./pages/ServerErrorPage";
+
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +39,22 @@ export const router = createBrowserRouter([
             {
                 path:"edit_post",
                 element: <PostEditPage />
+            },
+            {
+                path: "not_found",
+                element: <NotFoundPage />
+            },
+            {
+                path: "unauthorized",
+                element: <UnauthorizedPage />
+            },
+            {
+                path: "*",
+                element: <NotFoundPage />
+            },
+            {
+                path: '/server_error',
+                element: <ServerErrorPage />
             }
             ]
     }

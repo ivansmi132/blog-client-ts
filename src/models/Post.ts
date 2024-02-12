@@ -10,9 +10,10 @@ export interface Post {
     user: User,
 }
 
+// image is used for the File
 export interface NewPost {
     title: string,
     content: string,
-    image?: any;
     image_url?: string;
+    image?: any;
 }

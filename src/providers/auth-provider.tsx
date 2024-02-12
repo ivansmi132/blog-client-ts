@@ -7,7 +7,8 @@ interface AuthContextValue {
     user: User | null;
     logOut: () => void,
     checkingAuthStatus: boolean,
-    setCheckingAuthStatus: CallableFunction
+    setCheckingAuthStatus: CallableFunction,
+    isAdmin: () => boolean;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -49,7 +50,19 @@ export function AuthContextProvider({children}: ContextProviderProps) {
         }
     }
 
-    const value: AuthContextValue = {user, logOut, checkingAuthStatus, setCheckingAuthStatus};
+    function isAdmin() {
+        if (!user) {
+            return false
+        }
+        return user.is_admin;
+    }
+
+    const value: AuthContextValue = {
+        user,
+        logOut,
+        checkingAuthStatus,
+        setCheckingAuthStatus,
+        isAdmin};
 
     return (
         <AuthContext.Provider value={value}>
