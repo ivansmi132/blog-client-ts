@@ -3,6 +3,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### .env file :
+REACT_APP_API_URL=http://127.0.0.1:3001 \
+HOST=127.0.0.1
+
 ### Utilized Libraries:
 1. antd
 2. react-router-dom
