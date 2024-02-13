@@ -37,3 +37,29 @@
 .navbar-user-profile-container a:hover {
     color:tomato;
 }
+
+.user-profile-arrow {
+    margin-left: 6px;
+}
+
+.single-post-floating-menu {
+    right: 70px
+}
+
+@media (max-width: 800px) {
+
+    .main-navbar-name {
+        font-size: 20px !important;
+    }
+
+    .user-profile-name-and-arrow {
+        display: none;
+    }
+
+    .single-post-floating-menu {
+        right: 10px;
+        position: fixed;
+        top: 500px;
+    }
+
+}

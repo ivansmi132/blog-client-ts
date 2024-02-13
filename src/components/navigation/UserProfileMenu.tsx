@@ -38,19 +38,25 @@ export function UserProfileMenu({user} : {user: User}) {
     }
 
     return (
-        <div className="navbar-user-profile-container">
+            <Dropdown className="navbar-user-profile-container"
+                      menu={{items, onClick}}
+                      trigger={['click']} arrow>
 
-            <Dropdown menu={{items, onClick}} trigger={['click']} arrow>
+                <div>
+                    <a className="user-profile-name-and-arrow"
+                       onClick={(e) =>
+                        e.preventDefault()}>
 
-                <a onClick={(e) =>
-                    e.preventDefault()}>
-                    Welcome, {user.name}
-                    <DownOutlined style={{marginLeft: "5px"}} />
-                </a>
+                        <span className="user-profile-name">
+                            Welcome, {user.name}
+                        </span>
+
+                        <DownOutlined className="user-profile-arrow" />
+                    </a>
+
+                    <Avatar size={50} src={user.picture}/>
+                </div>
 
             </Dropdown>
-
-            <Avatar size={50} src={user.picture}/>
-        </div>
     )
 }

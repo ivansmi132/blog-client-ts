@@ -44,7 +44,8 @@ export function SinglePostMenu({currentPost}: {currentPost: Post}) {
 
     return (
 
-    <FloatButton.Group shape="circle" style={{right: "70px"}}>
+    <FloatButton.Group shape="circle"
+                       className="single-post-floating-menu">
 
         {(isAdmin() || isPostCreator()) &&
             <FloatButton

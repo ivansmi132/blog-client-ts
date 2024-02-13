@@ -16,7 +16,7 @@ export function MyApp() {
 
                     <Navbar />
 
-                    <Content style={{ padding: '0 48px', marginTop: "3%" }}>
+                    <Content className="main-content">
                         <div className="main-page-container">
                             <Outlet />
                         </div>
