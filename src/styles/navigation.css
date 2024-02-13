@@ -46,6 +46,10 @@
     right: 70px
 }
 
+.small-google-button {
+    display:none;
+}
+
 @media (max-width: 800px) {
 
     .main-navbar-name {
@@ -60,6 +64,16 @@
         right: 10px;
         position: fixed;
         top: 500px;
+    }
+
+    .google-button {
+        display: none;
+    }
+
+    .small-google-button {
+        display:inline-flex;
+        width: 100%;
+        font-size: 30px;
     }
 
 }
