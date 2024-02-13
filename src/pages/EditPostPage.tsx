@@ -29,7 +29,10 @@ export function EditPostPage() {
 
     return (
         selectedPost ?
-            <EditPostForm selectedPost={selectedPost}/>
+            <>
+                <h1 className="header form-page">Edit Post</h1>
+                <EditPostForm selectedPost={selectedPost}/>
+            </>
             :
             <div style={{textAlign: "center"}}>
                 <Spin/>

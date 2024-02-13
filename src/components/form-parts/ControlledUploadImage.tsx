@@ -1,7 +1,7 @@
 import {Control, Controller} from "react-hook-form";
 import {Button, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Image} from 'antd';
 
 interface ControlledUploadImageProps {
@@ -32,7 +32,7 @@ export function ControlledUploadImage({control, image_url} :ControlledUploadImag
                                 return false}}>
 
                         <Button className="upload-button" icon={<UploadOutlined />}>
-                            Upload Image (Optional)
+                            Upload Image (&lt; 5mb)
                         </Button>
                     </Upload>
 

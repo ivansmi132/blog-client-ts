@@ -19,7 +19,7 @@ export function PostCard({post, loading, setLoading}: PostCardProps) {
 
             <div className="post-card-contents">
 
-                <img className="post-image"
+                <img className="post-card-image"
                      alt=""
                      src={image_url}
                 />
