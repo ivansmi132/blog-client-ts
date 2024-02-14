@@ -1,9 +1,9 @@
 # OurBlog - A Fullstack Blog Application
 
 ### Render Cloud URL: 
-https://react-client-d2vl.onrender.com
-It might take a minute for the server to wake up.
-I added ilia's grunitech email as a test email in my google oauth configurations so that he can sign in and test the application. 
+https://react-client-d2vl.onrender.com \
+It might take a minute for the server to wake up. \
+I added ilia's grunitech email as a test email in my google oauth configurations so that he can sign in and test the application.  \
 Supported image formats: png/jpeg/gif
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
