@@ -80,11 +80,25 @@ export function usePostsAPI() {
         }
     }
 
+    async function fetchLatestPosts() {
+
+        try {
+            const posts = await fetch(
+                `${process.env.REACT_APP_API_URL}/posts?type=latest`,
+                {credentials: "include"});
+
+            return posts.json();
+        } catch {
+            throw new Error("Server error");
+        }
+    }
+
     return ({
         getPostById,
         addPost,
         deletePostById,
         fetchAllPosts,
-        editPost
+        editPost,
+        fetchLatestPosts
     });
 }

@@ -26,6 +26,7 @@ export function ControlledUploadImage({control, image_url} :ControlledUploadImag
                             onChange={onChange}
                             onRemove={() => setPreviewImage("")}
                             maxCount={1}
+                            accept="image/png, image/jpeg, image/gif"
                             beforeUpload={(file) => {
                                 setPreviewImage(URL.createObjectURL(file));
                                 // we return false to ignore the default xhr request of Upload

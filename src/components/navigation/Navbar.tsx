@@ -6,7 +6,7 @@ import {
     ReadOutlined
 } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useAuthContext} from "../../hooks/useAuthContext";
 import {UserMenu} from "./UserMenu";
 import '../../styles/navigation.css';
@@ -14,6 +14,9 @@ import '../../styles/navigation.css';
 
 
 export function Navbar() {
+
+    const location = useLocation();
+    const {pathname} = location;
 
     const navigate = useNavigate();
     const authContext = useAuthContext();
@@ -53,6 +56,7 @@ export function Navbar() {
                 mode="horizontal"
                 items={items}
                 onClick={menuClickHandler}
+                selectedKeys={[pathname]}
             />
 
             {!authContext.checkingAuthStatus &&

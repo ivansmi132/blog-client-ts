@@ -5,12 +5,10 @@ import {Post} from "../../models/Post";
 import {usePostsAPI} from "../../hooks/usePostsAPI";
 import {PostsPagination} from "../PostsPagination";
 import {useNavigate} from "react-router-dom";
+import {PostsState} from "../../models/PostsState";
 
 
-interface PostsState {
-    list: Post[];
-    totalPostsNumber: number;
-}
+
 
 export function PostsList() {
 
